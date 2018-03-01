@@ -31,16 +31,20 @@ function opration(keyid){
 	
 	if(isNaN(curOprator)){
 
-		if(curOprator === '='){			
-			console.log('=');
-			doCalculation(tempno,lastno,lastOprator);
-			return;
+		if(curOprator === '='){
+			if(tempno !== null && lastno!== null && lastOprator!== null){
+				console.log('=');
+				doCalculation(tempno,lastno,lastOprator);
+				$('#history').html('');
+				return;
+			}		
 		}
 			
 		if( num1 === null ){
 
 			if(tempno === null){
-				num1 = $('#calnumber').val();				
+				num1 = parseFloat( $('#calnumber').val() );
+				$('#history').append(num1);				
 			}else{
 				num1 = tempno;
 			}
@@ -48,19 +52,23 @@ function opration(keyid){
 			lastOprator = curOprator;
 			curOprator = null;
 			
-		}else if( num2 === null ){			
-			num2 = $('#calnumber').val();
-			console.log('lastOprator in if'+lastOprator);				
-		}
 			
+		}else if( num2 === null ){			
+			num2 = parseFloat( $('#calnumber').val() );
+			$('#history').append(' '+lastOprator+' '+num2);
+			console.log('lastOprator in if'+lastOprator);				
+		}		
 		
-		if(num1 !== null && num2 !== null && lastOprator !== null){			
-			doCalculation(num1,num2,lastOprator);			
+		if(num1 !== null && num2 !== null && lastOprator !== null){							
+			doCalculation(num1,num2,lastOprator);
 		}
 		
-		//if(inputflag == 0){
+		if(inputflag == 0){
 			$('#calnumber').val('');
-		//}				
+		}
+		
+		
+		
 	}	
 }
 function doCalculation(tempnum1,tempnum2,lastOprator){
@@ -90,6 +98,7 @@ function doCalculation(tempnum1,tempnum2,lastOprator){
 	$('#calnumber, #result').val(calResult);
 	inputflag = 1;
 }
+
 
 $(document).keyup(function(e){
 	//var reg = /^\d+$/;
