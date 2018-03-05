@@ -15,7 +15,9 @@ function init(){
 	tempno = null;
 	lastno = null;
 	inputflag = 0;
-	opratorsArray = {107: '+', 109: '-', 106: '*',111:'/',13:'='};
+	opratorsArray = {107: '+', 109: '-', 106: '*',111:'/',13:'=',27:'C',8:'<',46:'CE'};
+	$('#calnumber').val('');
+	$('#history').html('');
 	$("#calnumber").focus();	
 }
 
@@ -30,6 +32,25 @@ function opration(keyid){
 	}
 	
 	if(isNaN(curOprator)){
+		
+		if(curOprator === '<'){			
+			if(inputflag){
+				var str = $('#calnumber').val();
+				str = str.slice(0, -1); 
+				$('#calnumber').val(str);
+			}	
+			curOprator = null;
+			return;					
+		}
+		if(curOprator === 'C'){			
+			init();
+			curOprator = null;
+			return;					
+		}
+		if(curOprator === 'CE'){			
+			$('#calnumber').val(0);
+			return;					
+		}
 
 		if(curOprator === '='){
 			if(tempno !== null && lastno!== null && lastOprator!== null){
@@ -66,10 +87,7 @@ function opration(keyid){
 		
 		if(inputflag == 0){
 			$('#calnumber').val('');
-		}
-		
-		
-		
+		}		
 	}	
 }
 function doCalculation(tempnum1,tempnum2,lastOprator){
@@ -109,7 +127,9 @@ $(document).keyup(function(e){
 	//}else{
 		$("#calnumber").focus();		
 		var keyid = e.keyCode;
+		
 		opration(keyid);
+		
 	//}	
 }); 
 
