@@ -119,9 +119,14 @@ function isNumber(evt) {
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
         return false;
     }*/
-	if( !reg.test($('#calnumber').val()) ){
-		e.preventDefault();
+	var reg = /^[0-9]*$/g;
+	var inputStr = $('#calnumber').val();
+	if( !reg.test( inputStr ) ){
+		evt.preventDefault();
 		console.log("Please input number only.");
+		var cleanString = inputStr.replace(/[a-z]/g, "");
+		$('#calnumber').val(cleanString);
+		console.log(cleanString);
 	}
     return true;
 }
