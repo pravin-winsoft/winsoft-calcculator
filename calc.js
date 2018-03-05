@@ -16,7 +16,7 @@ function init(){
 	lastno = null;
 	inputflag = 0;
 	opratorsArray = {107: '+', 109: '-', 106: '*',111:'/',13:'='};
-	$("#calnumber").focus();
+	$("#calnumber").focus();	
 }
 
 function opration(keyid){	
@@ -36,6 +36,7 @@ function opration(keyid){
 				console.log('=');
 				doCalculation(tempno,lastno,lastOprator);
 				$('#history').html('');
+				curOprator = null;
 				return;
 			}		
 		}
@@ -111,6 +112,21 @@ $(document).keyup(function(e){
 		opration(keyid);
 	//}	
 }); 
+
+function isNumber(evt) {
+    /*evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }*/
+	if( !reg.test($('#calnumber').val()) ){
+		e.preventDefault();
+		console.log("Please input number only.");
+	}
+    return true;
+}
+
+
 function enterNumber(inputValue){
 	$("#calnumber").val(function() {
 		return this.value + inputValue;					
